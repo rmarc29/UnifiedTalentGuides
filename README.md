@@ -6,7 +6,8 @@ Based on wowhead, hcguides and other popular HC guides websites.
 ## Screenshots
 ![Image](https://github.com/user-attachments/assets/6488c8ad-6d74-4141-a0e5-180b6a68d05f)
 
-
+## Version
+Remember, this is a Beta (v0.1), improvements are coming.
 
 
 -- Feel free to fork and modify stuff around
