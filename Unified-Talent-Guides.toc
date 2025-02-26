@@ -14,4 +14,4 @@ RogueTalents.lua
 ShamanTalents.lua
 WarriorTalents.lua
 WarlockTalents.lua
-Unified-Talent-Guides.lua
+UnifiedTalentGuides.lua
