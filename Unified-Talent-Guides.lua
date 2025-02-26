@@ -1,8 +1,8 @@
-local UnifiedTalentGuides = CreateFrame("Frame", "UnifiedTalentGuides", UIParent)
-UnifiedTalentGuides:SetWidth(220)
-UnifiedTalentGuides:SetHeight(160)
-UnifiedTalentGuides:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-UnifiedTalentGuides:SetBackdrop({
+local Unified-Talent-Guides = CreateFrame("Frame", "Unified-Talent-Guides", UIParent)
+Unified-Talent-Guides:SetWidth(220)
+Unified-Talent-Guides:SetHeight(160)
+Unified-Talent-Guides:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+Unified-Talent-Guides:SetBackdrop({
     bgFile = "Interface/Tooltips/UI-Tooltip-Background",
     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
     tile = true,
@@ -10,13 +10,13 @@ UnifiedTalentGuides:SetBackdrop({
     edgeSize = 16,
     insets = { left = 4, right = 4, top = 4, bottom = 4 }
 })
-UnifiedTalentGuides:SetBackdropColor(0, 0, 0, 0.8)
-UnifiedTalentGuides:SetBackdropBorderColor(1, 1, 1, 1)
-UnifiedTalentGuides:EnableMouse(true)
-UnifiedTalentGuides:SetMovable(true)
-UnifiedTalentGuides:RegisterForDrag("LeftButton")
-UnifiedTalentGuides:SetScript("OnDragStart", function() UnifiedTalentGuides:StartMoving() end)
-UnifiedTalentGuides:SetScript("OnDragStop", function() UnifiedTalentGuides:StopMovingOrSizing() end)
+Unified-Talent-Guides:SetBackdropColor(0, 0, 0, 0.8)
+Unified-Talent-Guides:SetBackdropBorderColor(1, 1, 1, 1)
+Unified-Talent-Guides:EnableMouse(true)
+Unified-Talent-Guides:SetMovable(true)
+Unified-Talent-Guides:RegisterForDrag("LeftButton")
+Unified-Talent-Guides:SetScript("OnDragStart", function() Unified-Talent-Guides:StartMoving() end)
+Unified-Talent-Guides:SetScript("OnDragStop", function() Unified-Talent-Guides:StopMovingOrSizing() end)
 
 -- Ensure talent order tables are loaded
 if not druidTalentOrder or not hunterTalentOrder or not warriorTalentOrder or not warlockTalentOrder then
@@ -51,11 +51,11 @@ local function UpdateTalentDisplay()
         if talentInfo then
             local talentName, iconPath = unpack(talentInfo)
 
-            if not UnifiedTalentGuides["Talent" .. i] then
-                local talentFrame = CreateFrame("Frame", nil, UnifiedTalentGuides)
+            if not Unified-Talent-Guides["Talent" .. i] then
+                local talentFrame = CreateFrame("Frame", nil, Unified-Talent-Guides)
                 talentFrame:SetWidth(190)
                 talentFrame:SetHeight(30)
-                talentFrame:SetPoint("TOP", UnifiedTalentGuides, "TOP", 0, -((i - 1) * 35))
+                talentFrame:SetPoint("TOP", Unified-Talent-Guides, "TOP", 0, -((i - 1) * 35))
 
                 local levelText = talentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
                 levelText:SetPoint("LEFT", talentFrame, "LEFT", 0, -20)
@@ -76,9 +76,9 @@ local function UpdateTalentDisplay()
                 talentFrame.levelText = levelText
                 talentFrame.icon = icon
                 talentFrame.text = text
-                UnifiedTalentGuides["Talent" .. i] = talentFrame
+                Unified-Talent-Guides["Talent" .. i] = talentFrame
             else
-                local talentFrame = UnifiedTalentGuides["Talent" .. i]
+                local talentFrame = Unified-Talent-Guides["Talent" .. i]
                 talentFrame.levelText:SetText("lvl " .. talentLevel .. " :")
                 talentFrame.icon:SetTexture(iconPath)
                 talentFrame.text:SetText(talentName)
@@ -88,9 +88,9 @@ local function UpdateTalentDisplay()
 end
 
 -- Event handling for level-up updates
-UnifiedTalentGuides:RegisterEvent("PLAYER_LEVEL_UP")
-UnifiedTalentGuides:RegisterEvent("PLAYER_ENTERING_WORLD")
-UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
+Unified-Talent-Guides:RegisterEvent("PLAYER_LEVEL_UP")
+Unified-Talent-Guides:RegisterEvent("PLAYER_ENTERING_WORLD")
+Unified-Talent-Guides:SetScript("OnEvent", function(self, event, ...)
     UpdateTalentDisplay()
 end)
 
