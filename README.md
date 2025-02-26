@@ -1,4 +1,4 @@
-# Unified-Talent-Guides (TNS's Talent Guides)
+# UnifiedTalentGuides (TNS's Talent Guides)
 ## Info
 This is an AddOn for World of Warcraft Vanilla (v.1.12), that will show players what talent to choose depending on what class they play.
 Based on wowhead, hcguides and other popular HC guides websites.
