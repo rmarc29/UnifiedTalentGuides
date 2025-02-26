@@ -1,5 +1,5 @@
 ## Interface : 11200
-## Title : UnifiedTalentGuides
+## Title : TNS's Talent Guides
 ## Notes : Unified version of the talent guides for WoW Vanilla.
 ## Version : Beta 0.1
 ## Author : rmarc29 (aka TNS)
@@ -14,4 +14,4 @@ RogueTalents.lua
 ShamanTalents.lua
 WarriorTalents.lua
 WarlockTalents.lua
-UnifiedTalentGuides.lua
+Unified-Talent-Guides.lua
