@@ -8,6 +8,7 @@ Based on wowhead, hcguides and other popular HC guides websites.
 
 ## Version
 Remember, this is a Beta (v0.2), improvements are coming.
+You **WILL** experience frame bugs, missing icons, incorrect talents and so on ... 
 
 
 -- Feel free to fork and modify stuff around
