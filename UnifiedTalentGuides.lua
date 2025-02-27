@@ -25,7 +25,12 @@ local talentGuides = {
     ["DRUID"] = druidTalentOrder,
     ["HUNTER"] = hunterTalentOrder,
     ["WARRIOR"] = warriorTalentOrder,
-    ["WARLOCK"] = warlockTalentOrder
+    ["WARLOCK"] = warlockTalentOrder,
+    ["PALADIN"] = warlockTalentOrder,
+    ["ROGUE"] = warlockTalentOrder,
+    ["MAGE"] = warlockTalentOrder,
+    ["PRIEST"] = warlockTalentOrder,
+    ["SHAMAN"] = warlockTalentOrder,
 }
 local talentOrder = talentGuides[playerClass]
 
