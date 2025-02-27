@@ -18,7 +18,7 @@ UnifiedTalentGuides:RegisterForDrag("LeftButton")
 UnifiedTalentGuides:SetScript("OnDragStart", function() UnifiedTalentGuides:StartMoving() end)
 UnifiedTalentGuides:SetScript("OnDragStop", function() UnifiedTalentGuides:StopMovingOrSizing() end)
 
--- Fetching player class
+-- Fetching player class ( _ to ignore localized class names, need of English class token)
 local _, playerClass = UnitClass("player")
 
 local talentGuides = {
