@@ -1,8 +1,8 @@
-local UnifiedTalentGuide = CreateFrame("Frame", "UnifiedTalentGuide", UIParent)
-UnifiedTalentGuide:SetWidth(220)
-UnifiedTalentGuide:SetHeight(160)
-UnifiedTalentGuide:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-UnifiedTalentGuide:SetBackdrop({
+local UnifiedTalentGuides = CreateFrame("Frame", "UnifiedTalentGuides", UIParent)
+UnifiedTalentGuides:SetWidth(220)
+UnifiedTalentGuides:SetHeight(160)
+UnifiedTalentGuides:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+UnifiedTalentGuides:SetBackdrop({
     bgFile = "Interface/Tooltips/UI-Tooltip-Background",
     edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
     tile = true,
@@ -10,24 +10,17 @@ UnifiedTalentGuide:SetBackdrop({
     edgeSize = 16,
     insets = { left = 4, right = 4, top = 4, bottom = 4 }
 })
-UnifiedTalentGuide:SetBackdropColor(0, 0, 0, 0.8)
-UnifiedTalentGuide:SetBackdropBorderColor(1, 1, 1, 1)
-UnifiedTalentGuide:EnableMouse(true)
-UnifiedTalentGuide:SetMovable(true)
-UnifiedTalentGuide:RegisterForDrag("LeftButton")
-UnifiedTalentGuide:SetScript("OnDragStart", function() UnifiedTalentGuide:StartMoving() end)
-UnifiedTalentGuide:SetScript("OnDragStop", function() UnifiedTalentGuide:StopMovingOrSizing() end)
-
--- Ensure talent order tables are loaded
-if not druidTalentOrder or not hunterTalentOrder or not warriorTalentOrder or not warlockTalentOrder then
-    print("Error: Talent order tables not loaded correctly.")
-    return
-end
+UnifiedTalentGuides:SetBackdropColor(0, 0, 0, 0.8)
+UnifiedTalentGuides:SetBackdropBorderColor(1, 1, 1, 1)
+UnifiedTalentGuides:EnableMouse(true)
+UnifiedTalentGuides:SetMovable(true)
+UnifiedTalentGuides:RegisterForDrag("LeftButton")
+UnifiedTalentGuides:SetScript("OnDragStart", function() UnifiedTalentGuides:StartMoving() end)
+UnifiedTalentGuides:SetScript("OnDragStop", function() UnifiedTalentGuides:StopMovingOrSizing() end)
 
 -- Fetching player class
 local _, playerClass = UnitClass("player")
 
--- Assign the correct talent order table
 local talentGuides = {
     ["DRUID"] = druidTalentOrder,
     ["HUNTER"] = hunterTalentOrder,
@@ -36,14 +29,41 @@ local talentGuides = {
 }
 local talentOrder = talentGuides[playerClass]
 
--- Function to update talent display
+-- Function to hide the frame below level 10
+local function ForceHideFrame()
+    UnifiedTalentGuides:Hide()
+    UnifiedTalentGuides:SetAlpha(0)  
+    UnifiedTalentGuides:SetScript("OnShow", function(self) self:Hide() end)  
+    UnifiedTalentGuides:UnregisterAllEvents() 
+end
+
+-- Function to restore visibility when reaching level 10
+local function RestoreFrame()
+    UnifiedTalentGuides:SetAlpha(1)  
+    UnifiedTalentGuides:SetScript("OnShow", nil)  
+    UnifiedTalentGuides:RegisterEvent("PLAYER_LEVEL_UP")
+    UnifiedTalentGuides:RegisterEvent("PLAYER_ENTERING_WORLD")
+    UnifiedTalentGuides:Show()
+end
+
 local function UpdateTalentDisplay()
-    if not talentOrder then
-        print("No talent guide available for this class.")
+    local level = UnitLevel("player")
+
+    if level < 10 then
+        ForceHideFrame()
         return
+    else
+        RestoreFrame()
     end
 
-    local level = UnitLevel("player")
+    -- Clear previous talent frames before updating
+    for i = 1, 3 do
+        if UnifiedTalentGuides["Talent" .. i] then
+            UnifiedTalentGuides["Talent" .. i]:Hide()
+        end
+    end
+
+    -- Update talent frames based on the player's level
     for i = 1, 3 do
         local talentLevel = level + (i - 1)
         local talentInfo = talentOrder[talentLevel]
@@ -51,11 +71,11 @@ local function UpdateTalentDisplay()
         if talentInfo then
             local talentName, iconPath = unpack(talentInfo)
 
-            if not UnifiedTalentGuide["Talent" .. i] then
-                local talentFrame = CreateFrame("Frame", nil, UnifiedTalentGuide)
+            if not UnifiedTalentGuides["Talent" .. i] then
+                local talentFrame = CreateFrame("Frame", nil, UnifiedTalentGuides)
                 talentFrame:SetWidth(190)
                 talentFrame:SetHeight(30)
-                talentFrame:SetPoint("TOP", UnifiedTalentGuide, "TOP", 0, -((i - 1) * 35))
+                talentFrame:SetPoint("TOP", UnifiedTalentGuides, "TOP", 0, -((i - 1) * 35))
 
                 local levelText = talentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
                 levelText:SetPoint("LEFT", talentFrame, "LEFT", 0, -20)
@@ -76,23 +96,41 @@ local function UpdateTalentDisplay()
                 talentFrame.levelText = levelText
                 talentFrame.icon = icon
                 talentFrame.text = text
-                UnifiedTalentGuide["Talent" .. i] = talentFrame
+                UnifiedTalentGuides["Talent" .. i] = talentFrame
             else
-                local talentFrame = UnifiedTalentGuide["Talent" .. i]
+                local talentFrame = UnifiedTalentGuides["Talent" .. i]
                 talentFrame.levelText:SetText("lvl " .. talentLevel .. " :")
                 talentFrame.icon:SetTexture(iconPath)
                 talentFrame.text:SetText(talentName)
+                talentFrame:Show()
             end
         end
     end
 end
 
+local function CheckPlayerLevel()
+    local level = UnitLevel("player")
+
+    if level < 10 then
+        ForceHideFrame()
+    else
+        RestoreFrame()
+        UpdateTalentDisplay()
+    end
+end
+
 -- Event handling for level-up updates
-UnifiedTalentGuide:RegisterEvent("PLAYER_LEVEL_UP")
-UnifiedTalentGuide:RegisterEvent("PLAYER_ENTERING_WORLD")
-UnifiedTalentGuide:SetScript("OnEvent", function(self, event, ...)
-    UpdateTalentDisplay()
+UnifiedTalentGuides:RegisterEvent("PLAYER_LEVEL_UP")
+UnifiedTalentGuides:RegisterEvent("PLAYER_ENTERING_WORLD")
+UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
+    CheckPlayerLevel()
 end)
 
--- Initial update
-UpdateTalentDisplay()
+-- Check and apply the correct frame state on startup
+CheckPlayerLevel()
+
+-- Ensure talent display updates properly after /reload or initial login
+UnifiedTalentGuides:RegisterEvent("PLAYER_LOGIN")
+UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
+    UpdateTalentDisplay()
+end)
