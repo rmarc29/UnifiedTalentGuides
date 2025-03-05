@@ -8,7 +8,7 @@ All icons have been **FIXED**
 ![Image](https://github.com/user-attachments/assets/6488c8ad-6d74-4141-a0e5-180b6a68d05f)
 
 ## Version
-Remember, this is a Beta (v0.3), improvements are coming.<br>
+Remember, this is a Beta (v0.4), improvements are coming.<br>
 You **WILL** experience frame bugs, missing icons, incorrect talents and so on ... 
 
 
