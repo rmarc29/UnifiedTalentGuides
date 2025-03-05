@@ -51,6 +51,17 @@ local function RestoreFrame()
     UnifiedTalentGuides:Show()
 end
 
+local title = UnifiedTalentGuides:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+title:SetPoint("TOP", UnifiedTalentGuides, "TOP", 0, -10)
+title:SetText("|cFFFF8080TNS|r's Unified Talent Guides")
+
+local underline = UnifiedTalentGuides:CreateTexture(nil, "ARTWORK")
+underline:SetTexture("Interface\\Buttons\\WHITE8x8") 
+underline:SetHeight(2) 
+underline:SetWidth(200) 
+underline:SetPoint("TOP", title, "BOTTOM", 0, -2) 
+underline:SetVertexColor(1, 1, 1, 0.5) 
+
 local function UpdateTalentDisplay()
     local level = UnitLevel("player")
 
@@ -83,7 +94,7 @@ local function UpdateTalentDisplay()
                 talentFrame:SetPoint("TOP", UnifiedTalentGuides, "TOP", 0, -((i - 1) * 35))
 
                 local levelText = talentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                levelText:SetPoint("LEFT", talentFrame, "LEFT", 0, -20)
+                levelText:SetPoint("LEFT", talentFrame, "LEFT", 0, -30)
                 levelText:SetText("lvl " .. talentLevel .. " :")
 
                 local icon = talentFrame:CreateTexture(nil, "ARTWORK")
