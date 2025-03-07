@@ -10,7 +10,7 @@ UnifiedTalentGuides:SetBackdrop({
     edgeSize = 16,
     insets = { left = 4, right = 4, top = 4, bottom = 4 }
 })
-UnifiedTalentGuides:SetBackdropColor(0, 0, 0, 0.8)
+UnifiedTalentGuides:SetBackdropColor(0, 0, 0, 0.5)
 UnifiedTalentGuides:SetBackdropBorderColor(1, 1, 1, 1)
 UnifiedTalentGuides:EnableMouse(true)
 UnifiedTalentGuides:SetMovable(true)
