@@ -5,7 +5,7 @@ Based on wowhead, hcguides and other popular HC guides websites.<br>
 All icons have been **FIXED**
 
 ## Screenshots
-![Image](https://github.com/user-attachments/assets/6488c8ad-6d74-4141-a0e5-180b6a68d05f)
+![Image](https://github.com/user-attachments/assets/1dc064a3-3577-473b-a6fb-26f4e387fe1d)
 
 ## Version
 Remember, this is a Beta (v0.4), improvements are coming.<br>
