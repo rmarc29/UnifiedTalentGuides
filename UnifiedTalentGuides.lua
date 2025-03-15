@@ -150,3 +150,59 @@ UnifiedTalentGuides:RegisterEvent("PLAYER_LOGIN")
 UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
     UpdateTalentDisplay()
 end)
+
+-- Settings
+
+local settingsPanel = CreateFrame("Frame", "UnifiedTalentGuides_Settings", UIParent)
+settingsPanel:SetWidth(250)
+settingsPanel:SetHeight(150)
+settingsPanel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+
+settingsPanel:SetBackdrop({
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 4, right = 4, top = 4, bottom = 4 }
+})
+settingsPanel:SetBackdropColor(0, 0, 0, 0.9)
+settingsPanel:SetBackdropBorderColor(1, 1, 1, 1)
+settingsPanel:Hide()
+
+local settingsTitle = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+settingsTitle:SetPoint("TOP", settingsPanel, "TOP", 0, -10)
+settingsTitle:SetText("Talent Guide Settings")
+
+local closeButton = CreateFrame("Button", "UnifiedTalentGuides_CloseButton", settingsPanel)
+closeButton:SetWidth(16)
+closeButton:SetHeight(16)
+closeButton:SetPoint("TOPRIGHT", settingsPanel, "TOPRIGHT", -5, -5)
+
+local closeIcon = closeButton:CreateTexture(nil, "ARTWORK")
+closeIcon:SetTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
+closeIcon:SetWidth(16)
+closeIcon:SetHeight(16)
+closeIcon:SetPoint("CENTER", closeButton, "CENTER")
+
+closeButton:SetScript("OnClick", function() settingsPanel:Hide() end)
+
+local settingsButton = CreateFrame("Button", "UnifiedTalentGuides_SettingsButton", UnifiedTalentGuides)
+settingsButton:SetWidth(16)
+settingsButton:SetHeight(16)
+settingsButton:SetPoint("TOPRIGHT", UnifiedTalentGuides, "TOPRIGHT", -5, -5)
+settingsButton:EnableMouse(true)
+
+local settingsIcon = settingsButton:CreateTexture(nil, "ARTWORK")
+settingsIcon:SetTexture("Interface\\Icons\\INV_Misc_Gear_01")
+settingsIcon:SetWidth(16)
+settingsIcon:SetHeight(16)
+settingsIcon:SetPoint("CENTER", settingsButton, "CENTER")
+
+local function ToggleSettings()
+    if settingsPanel:IsShown() then
+        settingsPanel:Hide()
+    else
+        settingsPanel:Show()
+    end
+end
+
+settingsButton:SetScript("OnClick", ToggleSettings)
