@@ -1,7 +1,7 @@
 ## Interface : 11200
 ## Title : |cFFFF8080TNS|r's Talent Guides
 ## Notes : Unified version of the HC talent guides for WoW Vanilla.
-## Version : Beta 0.4
+## Version : Beta 0.4.1
 ## Author : rmarc29 (aka TNS)
 
 
