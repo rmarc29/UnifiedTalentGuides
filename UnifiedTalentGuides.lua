@@ -218,16 +218,16 @@ showAddonCheckbox.text = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFon
 showAddonCheckbox.text:SetPoint("LEFT", showAddonCheckbox, "RIGHT", 5, 0)
 showAddonCheckbox.text:SetText("Show Talent Guide")
 
--- Function to update the addon frame visibility
+-- Updating the addon frame visibility
 local function ToggleAddonVisibility()
     if this:GetChecked() then
-        UnifiedTalentGuides:SetScript("OnShow", nil)  -- Remove any previous hiding script
+        UnifiedTalentGuides:SetScript("OnShow", nil)  
         UnifiedTalentGuides:Show()  
-        UnifiedTalentGuides:SetAlpha(1)  -- Ensure it's fully visible
+        UnifiedTalentGuides:SetAlpha(1)  
     else
         UnifiedTalentGuides:Hide()
         UnifiedTalentGuides:SetAlpha(0)  
-        UnifiedTalentGuides:SetScript("OnShow", function() UnifiedTalentGuides:Hide() end) -- Ensure it stays hidden
+        UnifiedTalentGuides:SetScript("OnShow", function() UnifiedTalentGuides:Hide() end) 
     end
 end
 
