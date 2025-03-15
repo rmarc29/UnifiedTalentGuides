@@ -206,3 +206,47 @@ local function ToggleSettings()
 end
 
 settingsButton:SetScript("OnClick", ToggleSettings)
+
+-- Create a checkbox inside the settings panel
+local showAddonCheckbox = CreateFrame("CheckButton", "UnifiedTalentGuides_ShowCheckbox", settingsPanel, "UICheckButtonTemplate")
+showAddonCheckbox:SetWidth(24)
+showAddonCheckbox:SetHeight(24)
+showAddonCheckbox:SetPoint("TOPLEFT", settingsPanel, "TOPLEFT", 20, -40) -- Position inside the settings panel
+
+-- Set checkbox label
+showAddonCheckbox.text = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+showAddonCheckbox.text:SetPoint("LEFT", showAddonCheckbox, "RIGHT", 5, 0)
+showAddonCheckbox.text:SetText("Show Talent Guide")
+
+-- Function to update the addon frame visibility
+local function ToggleAddonVisibility()
+    if this:GetChecked() then
+        UnifiedTalentGuides:SetScript("OnShow", nil)  -- Remove any previous hiding script
+        UnifiedTalentGuides:Show()  
+        UnifiedTalentGuides:SetAlpha(1)  -- Ensure it's fully visible
+    else
+        UnifiedTalentGuides:Hide()
+        UnifiedTalentGuides:SetAlpha(0)  
+        UnifiedTalentGuides:SetScript("OnShow", function() UnifiedTalentGuides:Hide() end) -- Ensure it stays hidden
+    end
+end
+
+showAddonCheckbox:SetScript("OnClick", ToggleAddonVisibility)
+showAddonCheckbox:SetChecked(UnifiedTalentGuides:IsShown())
+
+-- Chat cmd to open pannel
+
+SLASH_UTG1 = "/UTG"
+SLASH_UTG2 = "/utg"
+
+SlashCmdList["UTG"] = function(msg)
+    if msg == "settings" then
+        if UnifiedTalentGuides_Settings then
+            UnifiedTalentGuides_Settings:Show()
+        else
+            print("|cffff8080[UTG]|r Settings panel not found!")
+        end
+    else
+        print("|cffff8080[UTG] Usage:|r /UTG settings")
+    end
+end
