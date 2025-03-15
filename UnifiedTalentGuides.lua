@@ -34,7 +34,7 @@ local talentGuides = {
 }
 local talentOrder = talentGuides[playerClass]
 
--- Function to hide the frame below level 10
+-- Hiding the frame below level 10
 local function ForceHideFrame()
     UnifiedTalentGuides:Hide()
     UnifiedTalentGuides:SetAlpha(0)  
@@ -42,7 +42,7 @@ local function ForceHideFrame()
     UnifiedTalentGuides:UnregisterAllEvents() 
 end
 
--- Function to restore visibility when reaching level 10
+-- Restoring visibility when reaching level 10
 local function RestoreFrame()
     UnifiedTalentGuides:SetAlpha(1)  
     UnifiedTalentGuides:SetScript("OnShow", nil)  
