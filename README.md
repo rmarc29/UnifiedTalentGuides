@@ -4,7 +4,7 @@ This is an AddOn for World of Warcraft Vanilla (v.1.12) on [Turtle WoW](https://
 Based on wowhead, hcguides and other popular HC guides websites.
 
 ## Commands
-To open the Settings Panel, type `/UTG settings`<br>
+To open the Settings Panel, type `/UTG settings` or click on the cog icon, top right of the addon<br>
 To see other classes talents, type `/UTG *classname*`<br>
 To lock || unlock the addon's frame, type `/UTG lock` `/UTG unlock`<br>
 To reset the addon to original state, type `/UTG reset`
