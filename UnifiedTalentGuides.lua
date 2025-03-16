@@ -353,6 +353,6 @@ SlashCmdList["UTG"] = function(msg)
         UnifiedTalentGuides:RegisterForDrag("LeftButton")
         print("|cFFFF8080[UTG]|r Addon Frame Unlocked")
     else
-        print("|cffff8080[UTG] Usage:|r /UTG settings, /UTG <class>, or /UTG reset")
+        print("|cffff8080[UTG] Usage:|r /UTG settings, /UTG <class>, /UTG lock || unlock or /UTG reset")
     end
 end
