@@ -18,6 +18,10 @@ UnifiedTalentGuides:RegisterForDrag("LeftButton")
 UnifiedTalentGuides:SetScript("OnDragStart", function() UnifiedTalentGuides:StartMoving() end)
 UnifiedTalentGuides:SetScript("OnDragStop", function() UnifiedTalentGuides:StopMovingOrSizing() end)
 
+-- Manual player class
+local manualOverride = false
+local selectedClass = playerClass
+
 -- Fetching player class ( _ to ignore localized class names, need of English class token)
 local _, playerClass = UnitClass("player")
 
@@ -131,9 +135,14 @@ local function CheckPlayerLevel()
         ForceHideFrame()
     else
         RestoreFrame()
+        if not manualOverride then  -- Only auto-assign if there's no manual selection
+            selectedClass = playerClass
+            talentOrder = talentGuides[selectedClass]
+        end
         UpdateTalentDisplay()
     end
 end
+
 
 -- Event handling for level-up updates
 UnifiedTalentGuides:RegisterEvent("PLAYER_LEVEL_UP")
@@ -240,13 +249,27 @@ SLASH_UTG1 = "/UTG"
 SLASH_UTG2 = "/utg"
 
 SlashCmdList["UTG"] = function(msg)
-    if msg == "settings" then
+    local lowerMsg = string.lower(msg)
+
+    if lowerMsg == "settings" then
         if UnifiedTalentGuides_Settings then
             UnifiedTalentGuides_Settings:Show()
         else
             print("|cffff8080[UTG]|r Settings panel not found!")
         end
+    elseif lowerMsg == "reset" then
+        manualOverride = false
+        selectedClass = playerClass
+        talentOrder = talentGuides[selectedClass]
+        UpdateTalentDisplay()
+        print("|cffff8080[UTG]|r Reset to your character's class: " .. selectedClass .. ".")
+    elseif talentGuides[string.upper(lowerMsg)] then
+        manualOverride = true
+        selectedClass = string.upper(lowerMsg)
+        talentOrder = talentGuides[selectedClass]
+        UpdateTalentDisplay()
+        print("|cffff8080[UTG]|r Now showing talent guide for " .. selectedClass .. ".")
     else
-        print("|cffff8080[UTG] Usage:|r /UTG settings")
+        print("|cffff8080[UTG] Usage:|r /UTG settings, /UTG <class>, or /UTG reset")
     end
 end
