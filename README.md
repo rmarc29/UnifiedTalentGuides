@@ -5,7 +5,7 @@ Based on wowhead, hcguides and other popular HC guides websites.
 
 To open the Settings Panel, type `/UTG settings` in chat
 
-All icons have been **FIXED**
+All icons have been **FIXED**<br>
 All talent names have been **FIXED** (for [Turtle WoW](https://turtle-wow.org/) usage only)
 
 ## Screenshots
