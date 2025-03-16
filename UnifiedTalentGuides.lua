@@ -59,12 +59,47 @@ local title = UnifiedTalentGuides:CreateFontString(nil, "OVERLAY", "GameFontNorm
 title:SetPoint("TOP", UnifiedTalentGuides, "TOP", 0, -10)
 title:SetText("|cFFFF8080TNS|r's Unified Talent Guides")
 
-local underline = UnifiedTalentGuides:CreateTexture(nil, "ARTWORK")
-underline:SetTexture("Interface\\Buttons\\WHITE8x8") 
-underline:SetHeight(2) 
-underline:SetWidth(200) 
-underline:SetPoint("TOP", title, "BOTTOM", 0, -2) 
-underline:SetVertexColor(1, 1, 1, 0.5) 
+local underlineBG = UnifiedTalentGuides:CreateTexture(nil, "ARTWORK")
+underlineBG:SetTexture("Interface\\ChatFrame\\ChatFrameBackground")  
+underlineBG:SetWidth(200)  
+underlineBG:SetHeight(2)  
+underlineBG:SetPoint("TOP", title, "BOTTOM", 0, -2)  
+
+local underlineXP = UnifiedTalentGuides:CreateTexture(nil, "OVERLAY")
+underlineXP:SetTexture("Interface\\ChatFrame\\ChatFrameBackground")  
+underlineXP:SetHeight(2)  
+underlineXP:SetPoint("LEFT", underlineBG, "LEFT", 0, 0)  
+underlineXP:SetVertexColor(0.5, 0, 1, 1)  
+
+local function UpdateUnderlineXP()
+    local currentXP = UnitXP("player")
+    local maxXP = UnitXPMax("player")
+    local restedState = GetRestState()  
+
+    if restedState == 1 then  
+        underlineBG:SetVertexColor(0, 0, 0.3, 1) 
+        underlineXP:SetVertexColor(0, 0, 1, 1) 
+    else  
+        underlineBG:SetVertexColor(0.3, 0, 0.3, 1) 
+        underlineXP:SetVertexColor(0.5, 0, 1, 1)  
+    end
+
+    if maxXP > 0 then
+        local xpProgress = currentXP / maxXP 
+        underlineXP:SetWidth(200 * xpProgress)  
+    end
+end
+
+UpdateUnderlineXP()
+
+UnifiedTalentGuides:RegisterEvent("PLAYER_XP_UPDATE")
+UnifiedTalentGuides:RegisterEvent("UPDATE_EXHAUSTION")  
+UnifiedTalentGuides:SetScript("OnEvent", function(self, event)
+    if event == "PLAYER_XP_UPDATE" or event == "UPDATE_EXHAUSTION" then
+        UpdateUnderlineXP()
+    end
+end)
+
 
 local function UpdateTalentDisplay()
     local level = UnitLevel("player")
