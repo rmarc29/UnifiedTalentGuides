@@ -249,20 +249,59 @@ local function ToggleSettings()
     end
 end
 
+-- Settings checkboxes
+
+local showXPBarCheckbox = CreateFrame("CheckButton", "UnifiedTalentGuides_ShowXPBarCheckbox", settingsPanel, "UICheckButtonTemplate")
+showXPBarCheckbox:SetWidth(24)
+showXPBarCheckbox:SetHeight(24)
+showXPBarCheckbox:SetPoint("TOPLEFT", settingsPanel, "TOPLEFT", 20, -70) 
+
+showXPBarCheckbox.text = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+showXPBarCheckbox.text:SetPoint("LEFT", showXPBarCheckbox, "RIGHT", 5, 0)
+showXPBarCheckbox.text:SetText("Show XP Bar")
+
+local function ToggleXPBarVisibility()
+    if showXPBarCheckbox:GetChecked() then
+        underlineBG:Show()  
+        underlineXP:Show() 
+    else
+        underlineBG:Hide() 
+        underlineXP:Hide()  
+    end
+end
+
+showXPBarCheckbox:SetScript("OnClick", ToggleXPBarVisibility)
+
+showXPBarCheckbox:SetChecked(underlineBG:IsShown() and underlineXP:IsShown())
+
+local function SaveSettings()
+    if showXPBarCheckbox:GetChecked() then
+        underlineBG:Show()  
+        underlineXP:Show()  
+    else
+        underlineBG:Hide()  
+        underlineXP:Hide()  
+    end
+end
+
+UnifiedTalentGuides:RegisterEvent("PLAYER_LOGOUT")
+UnifiedTalentGuides:RegisterEvent("PLAYER_ENTERING_WORLD")
+UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
+    SaveSettings()
+end)
+
+
 settingsButton:SetScript("OnClick", ToggleSettings)
 
--- Create a checkbox inside the settings panel
 local showAddonCheckbox = CreateFrame("CheckButton", "UnifiedTalentGuides_ShowCheckbox", settingsPanel, "UICheckButtonTemplate")
 showAddonCheckbox:SetWidth(24)
 showAddonCheckbox:SetHeight(24)
-showAddonCheckbox:SetPoint("TOPLEFT", settingsPanel, "TOPLEFT", 20, -40) -- Position inside the settings panel
+showAddonCheckbox:SetPoint("TOPLEFT", settingsPanel, "TOPLEFT", 20, -40) 
 
--- Set checkbox label
 showAddonCheckbox.text = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 showAddonCheckbox.text:SetPoint("LEFT", showAddonCheckbox, "RIGHT", 5, 0)
 showAddonCheckbox.text:SetText("Show Talent Guide")
 
--- Updating the addon frame visibility
 local function ToggleAddonVisibility()
     if this:GetChecked() then
         UnifiedTalentGuides:SetScript("OnShow", nil)  
