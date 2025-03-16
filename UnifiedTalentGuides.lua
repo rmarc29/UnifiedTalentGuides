@@ -18,7 +18,7 @@ UnifiedTalentGuides:RegisterForDrag("LeftButton")
 UnifiedTalentGuides:SetScript("OnDragStart", function() UnifiedTalentGuides:StartMoving() end)
 UnifiedTalentGuides:SetScript("OnDragStop", function() UnifiedTalentGuides:StopMovingOrSizing() end)
 
--- Manual player class
+-- Manual player class selection
 local manualOverride = false
 local selectedClass = playerClass
 
@@ -133,15 +133,17 @@ local function UpdateTalentDisplay()
                 talentFrame:SetPoint("TOP", UnifiedTalentGuides, "TOP", 0, -((i - 1) * 35))
 
                 local levelText = talentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-                levelText:SetPoint("LEFT", talentFrame, "LEFT", 0, -30)
+                levelText:SetPoint("LEFT", talentFrame, "LEFT", 0, -40)
                 levelText:SetText("lvl " .. talentLevel .. " :")
 
+                -- Icon + Talent Name Placement
                 local icon = talentFrame:CreateTexture(nil, "ARTWORK")
                 icon:SetWidth(30)
                 icon:SetHeight(30)
                 icon:SetPoint("LEFT", levelText, "RIGHT", 5, -5)
                 icon:SetTexture(iconPath)
 
+                -- Talent Name Placement
                 local text = talentFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
                 text:SetPoint("LEFT", icon, "RIGHT", 8, 0)
                 text:SetWidth(120)
@@ -170,7 +172,7 @@ local function CheckPlayerLevel()
         ForceHideFrame()
     else
         RestoreFrame()
-        if not manualOverride then  -- Only auto-assign if there's no manual selection
+        if not manualOverride then 
             selectedClass = playerClass
             talentOrder = talentGuides[selectedClass]
         end
@@ -179,17 +181,14 @@ local function CheckPlayerLevel()
 end
 
 
--- Event handling for level-up updates
 UnifiedTalentGuides:RegisterEvent("PLAYER_LEVEL_UP")
 UnifiedTalentGuides:RegisterEvent("PLAYER_ENTERING_WORLD")
 UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
     CheckPlayerLevel()
 end)
 
--- Check and apply the correct frame state on startup
 CheckPlayerLevel()
 
--- Ensure talent display updates properly after /reload or initial login
 UnifiedTalentGuides:RegisterEvent("PLAYER_LOGIN")
 UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
     UpdateTalentDisplay()
@@ -343,6 +342,16 @@ SlashCmdList["UTG"] = function(msg)
         talentOrder = talentGuides[selectedClass]
         UpdateTalentDisplay()
         print("|cffff8080[UTG]|r Now showing talent guide for " .. selectedClass .. ".")
+    elseif lowerMsg == "lock" then
+        UnifiedTalentGuides:EnableMouse(false)
+        UnifiedTalentGuides:SetMovable(false)
+        UnifiedTalentGuides:ClearAllPoints()
+        print("|cFFFF8080[UTG]|r Addon Frame Locked")
+    elseif lowerMsg == "unlock" then
+        UnifiedTalentGuides:EnableMouse(true)
+        UnifiedTalentGuides:SetMovable(true)
+        UnifiedTalentGuides:RegisterForDrag("LeftButton")
+        print("|cFFFF8080[UTG]|r Addon Frame Unlocked")
     else
         print("|cffff8080[UTG] Usage:|r /UTG settings, /UTG <class>, or /UTG reset")
     end
