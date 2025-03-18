@@ -213,7 +213,7 @@ settingsPanel:Hide()
 
 local settingsTitle = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 settingsTitle:SetPoint("TOP", settingsPanel, "TOP", 0, -10)
-settingsTitle:SetText("Talent Guide Settings")
+settingsTitle:SetText("|cFFFF8080TNS|r's Unified Talent Guides Settings")
 
 local closeButton = CreateFrame("Button", "UnifiedTalentGuides_CloseButton", settingsPanel)
 closeButton:SetWidth(16)
@@ -239,9 +239,9 @@ infoButton:SetWidth(16)
 infoButton:SetHeight(16)
 infoButton:SetPoint("BOTTOMRIGHT", settingsPanel, "BOTTOMRIGHT", -10, 10)  
 
-local infoText = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-infoText:SetPoint("RIGHT", infoButton, "LEFT", -5, 0) 
-infoText:SetText("Info")
+local infoTitle = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+infoTitle:SetPoint("RIGHT", infoButton, "LEFT", -5, 0) 
+infoTitle:SetText("Info")
 
 local settingsIcon = settingsButton:CreateTexture(nil, "ARTWORK")
 settingsIcon:SetTexture("Interface\\Icons\\INV_Misc_Gear_01")
@@ -271,13 +271,24 @@ infoPanel:Hide()
 
 local infoTitle = infoPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 infoTitle:SetPoint("TOP", infoPanel, "TOP", 0, -10)
-infoTitle:SetText("|cFFFF8080Talent Guide Info|r")
+infoTitle:SetText("|cFFFF8080TNS|r's Unified Talent Guide Info")
 
 local infoText = infoPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 infoText:SetPoint("TOPLEFT", infoPanel, "TOPLEFT", 15, -40)
 infoText:SetWidth(270)
 infoText:SetJustifyH("LEFT")
-infoText:SetText("This addon helps you track the best talent progression for your class. \n\n- Automatically hides below level 10\n- Shows recommended talent order\n- Tracks XP and rested state\n- Custom settings available.")
+infoText:SetText("This addon helps you track the best talent progression for your class. \n\nHere are some useful chat commands :\n\n- To see other classes talents : /UTG *classname*\n- To |cFFFF8080lock|r || |cFF00FF00unlock|r the addon's frame : /UTG lock /UTG unlock\n- To reset the addon to original state : /UTG reset \n\n |cff00ccffAny donation is appreciated, as I work on this addon alone and in my free time|r :")
+
+local donationButton = CreateFrame("Button", nil, infoPanel)
+donationButton:SetWidth(200)
+donationButton:SetHeight(30)
+donationButton:SetPoint("TOPLEFT", infoText, "BOTTOMLEFT", 0, 0)
+
+local donationText = donationButton:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+donationText:SetAllPoints()
+donationText:SetText("|cff00ccffhttps://buymeacoffee.com/rmarc29|r")
+donationText:SetJustifyH("CENTER")
+donationText:SetTextColor(0, 0.8, 1)  
 
 local closeInfoButton = CreateFrame("Button", "UnifiedTalentGuides_CloseInfoButton", infoPanel)
 closeInfoButton:SetWidth(16)
@@ -300,7 +311,11 @@ local function ToggleInfoPanel()
     end
 end
 
-infoButton:SetScript("OnClick", ToggleInfoPanel)
+infoButton:SetScript("OnClick", function()
+    settingsPanel:Hide() 
+    infoPanel:Show() 
+end)
+
 
 local function ToggleSettings()
     if settingsPanel:IsShown() then
