@@ -234,11 +234,73 @@ settingsButton:SetHeight(16)
 settingsButton:SetPoint("TOPRIGHT", UnifiedTalentGuides, "TOPRIGHT", -5, -5)
 settingsButton:EnableMouse(true)
 
+local infoButton = CreateFrame("Button", "UnifiedTalentGuides_InfoButton", settingsPanel)
+infoButton:SetWidth(16)
+infoButton:SetHeight(16)
+infoButton:SetPoint("BOTTOMRIGHT", settingsPanel, "BOTTOMRIGHT", -10, 10)  
+
+local infoText = settingsPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+infoText:SetPoint("RIGHT", infoButton, "LEFT", -5, 0) 
+infoText:SetText("Info")
+
 local settingsIcon = settingsButton:CreateTexture(nil, "ARTWORK")
 settingsIcon:SetTexture("Interface\\Icons\\INV_Misc_Gear_01")
 settingsIcon:SetWidth(16)
 settingsIcon:SetHeight(16)
 settingsIcon:SetPoint("CENTER", settingsButton, "CENTER")
+
+local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
+infoIcon:SetTexture("Interface\\Icons\\INV_Misc_QuestionMark") 
+infoIcon:SetWidth(16)
+infoIcon:SetHeight(16)
+infoIcon:SetPoint("CENTER", infoButton, "CENTER")
+
+local infoPanel = CreateFrame("Frame", "UnifiedTalentGuides_InfoPanel", UIParent)
+infoPanel:SetWidth(300)
+infoPanel:SetHeight(200)
+infoPanel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+infoPanel:SetBackdrop({
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 4, right = 4, top = 4, bottom = 4 }
+})
+infoPanel:SetBackdropColor(0, 0, 0, 0.9)
+infoPanel:SetBackdropBorderColor(1, 1, 1, 1)
+infoPanel:Hide()
+
+local infoTitle = infoPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+infoTitle:SetPoint("TOP", infoPanel, "TOP", 0, -10)
+infoTitle:SetText("|cFFFF8080Talent Guide Info|r")
+
+local infoText = infoPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+infoText:SetPoint("TOPLEFT", infoPanel, "TOPLEFT", 15, -40)
+infoText:SetWidth(270)
+infoText:SetJustifyH("LEFT")
+infoText:SetText("This addon helps you track the best talent progression for your class. \n\n- Automatically hides below level 10\n- Shows recommended talent order\n- Tracks XP and rested state\n- Custom settings available.")
+
+local closeInfoButton = CreateFrame("Button", "UnifiedTalentGuides_CloseInfoButton", infoPanel)
+closeInfoButton:SetWidth(16)
+closeInfoButton:SetHeight(16)
+closeInfoButton:SetPoint("TOPRIGHT", infoPanel, "TOPRIGHT", -5, -5)
+
+local closeInfoIcon = closeInfoButton:CreateTexture(nil, "ARTWORK")
+closeInfoIcon:SetTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
+closeInfoIcon:SetWidth(16)
+closeInfoIcon:SetHeight(16)
+closeInfoIcon:SetPoint("CENTER", closeInfoButton, "CENTER")
+
+closeInfoButton:SetScript("OnClick", function() infoPanel:Hide() end)
+
+local function ToggleInfoPanel()
+    if infoPanel:IsShown() then
+        infoPanel:Hide()
+    else
+        infoPanel:Show()
+    end
+end
+
+infoButton:SetScript("OnClick", ToggleInfoPanel)
 
 local function ToggleSettings()
     if settingsPanel:IsShown() then
