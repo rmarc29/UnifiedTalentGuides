@@ -321,38 +321,52 @@ showAddonCheckbox:SetChecked(UnifiedTalentGuides:IsShown())
 SLASH_UTG1 = "/UTG"
 SLASH_UTG2 = "/utg"
 
-SlashCmdList["UTG"] = function(msg)
+local function UTG_CommandHandler(msg)
     local lowerMsg = string.lower(msg)
+    
+    local commands = {
+        settings = function()
+            if UnifiedTalentGuides_Settings then
+                UnifiedTalentGuides_Settings:Show()
+            else
+                print("|cffff8080[UTG]|r Settings panel not found!")
+            end
+        end,
+        
+        reset = function()
+            manualOverride = false
+            selectedClass = playerClass
+            talentOrder = talentGuides[selectedClass]
+            UpdateTalentDisplay()
+            print("|cffff8080[UTG]|r Reset to your character's class: " .. selectedClass .. ".")
+        end,
+        
+        lock = function()
+            UnifiedTalentGuides:EnableMouse(false)
+            UnifiedTalentGuides:SetMovable(false)
+            UnifiedTalentGuides:ClearAllPoints()
+            print("|cFFFF8080[UTG]|r Addon Frame Locked")
+        end,
 
-    if lowerMsg == "settings" then
-        if UnifiedTalentGuides_Settings then
-            UnifiedTalentGuides_Settings:Show()
-        else
-            print("|cffff8080[UTG]|r Settings panel not found!")
+        unlock = function()
+            UnifiedTalentGuides:EnableMouse(true)
+            UnifiedTalentGuides:SetMovable(true)
+            UnifiedTalentGuides:RegisterForDrag("LeftButton")
+            print("|cFFFF8080[UTG]|r Addon Frame Unlocked")
         end
-    elseif lowerMsg == "reset" then
-        manualOverride = false
-        selectedClass = playerClass
-        talentOrder = talentGuides[selectedClass]
-        UpdateTalentDisplay()
-        print("|cffff8080[UTG]|r Reset to your character's class: " .. selectedClass .. ".")
+    }
+
+    if commands[lowerMsg] then
+        commands[lowerMsg]()  -- Execute the function
     elseif talentGuides[string.upper(lowerMsg)] then
         manualOverride = true
         selectedClass = string.upper(lowerMsg)
         talentOrder = talentGuides[selectedClass]
         UpdateTalentDisplay()
         print("|cffff8080[UTG]|r Now showing talent guide for " .. selectedClass .. ".")
-    elseif lowerMsg == "lock" then
-        UnifiedTalentGuides:EnableMouse(false)
-        UnifiedTalentGuides:SetMovable(false)
-        UnifiedTalentGuides:ClearAllPoints()
-        print("|cFFFF8080[UTG]|r Addon Frame Locked")
-    elseif lowerMsg == "unlock" then
-        UnifiedTalentGuides:EnableMouse(true)
-        UnifiedTalentGuides:SetMovable(true)
-        UnifiedTalentGuides:RegisterForDrag("LeftButton")
-        print("|cFFFF8080[UTG]|r Addon Frame Unlocked")
     else
         print("|cffff8080[UTG] Usage:|r /UTG settings, /UTG <class>, /UTG lock || unlock or /UTG reset")
     end
 end
+
+SlashCmdList["UTG"] = UTG_CommandHandler
