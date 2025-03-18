@@ -316,7 +316,7 @@ end
 showAddonCheckbox:SetScript("OnClick", ToggleAddonVisibility)
 showAddonCheckbox:SetChecked(UnifiedTalentGuides:IsShown())
 
--- Chat cmd to open pannel
+-- Chat cmds
 
 SLASH_UTG1 = "/UTG"
 SLASH_UTG2 = "/utg"
@@ -357,7 +357,7 @@ local function UTG_CommandHandler(msg)
     }
 
     if commands[lowerMsg] then
-        commands[lowerMsg]()  -- Execute the function
+        commands[lowerMsg]()  
     elseif talentGuides[string.upper(lowerMsg)] then
         manualOverride = true
         selectedClass = string.upper(lowerMsg)
