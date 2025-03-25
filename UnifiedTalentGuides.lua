@@ -193,8 +193,33 @@ UnifiedTalentGuides:RegisterEvent("PLAYER_LOGIN")
 UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
     UpdateTalentDisplay()
 end)
+-- Custom panel
+local customPanel = CreateFrame("Frame", "UnifiedTalentGuides_Custom", UIParent)
+customPanel:SetWidth(200)
+customPanel:SetHeight(100)
+customPanel:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 
--- Settings
+customPanel:SetBackdrop({
+    bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+    edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+    tile = true, tileSize = 16, edgeSize = 16,
+    insets = { left = 4, right = 4, top = 4, bottom = 4 }
+})
+
+customPanel:SetBackdropColor(0, 0, 0, 0.9)
+customPanel:SetBackdropBorderColor(1, 1, 1, 1)
+customPanel:Hide()
+
+local customTitle = customPanel:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+customTitle:SetPoint("TOP", customPanel, "TOP", 0, -10)
+customTitle:SetText("|cFFFF8080TNS|r's Unified Talent Guides Custom panel")
+
+local closeButton_custom = CreateFrame("Button", "UnifiedTalentGuides_CloseButton", customPanel)
+closeButton_custom:SetWidth(16)
+closeButton_custom:SetHeight(16)
+closeButton_custom:SetPoint("TOPRIGHT", customPanel, "TOPRIGHT", -5, -5)
+
+-- Settings panel
 
 local settingsPanel = CreateFrame("Frame", "UnifiedTalentGuides_Settings", UIParent)
 settingsPanel:SetWidth(250)
@@ -220,13 +245,13 @@ closeButton:SetWidth(16)
 closeButton:SetHeight(16)
 closeButton:SetPoint("TOPRIGHT", settingsPanel, "TOPRIGHT", -5, -5)
 
+closeButton:SetScript("OnClick", function() settingsPanel:Hide() end)
+
 local closeIcon = closeButton:CreateTexture(nil, "ARTWORK")
 closeIcon:SetTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
 closeIcon:SetWidth(16)
 closeIcon:SetHeight(16)
 closeIcon:SetPoint("CENTER", closeButton, "CENTER")
-
-closeButton:SetScript("OnClick", function() settingsPanel:Hide() end)
 
 local settingsButton = CreateFrame("Button", "UnifiedTalentGuides_SettingsButton", UnifiedTalentGuides)
 settingsButton:SetWidth(16)
@@ -430,6 +455,14 @@ local function UTG_CommandHandler(msg)
             UnifiedTalentGuides:SetMovable(true)
             UnifiedTalentGuides:RegisterForDrag("LeftButton")
             print("|cFFFF8080[UTG]|r Addon Frame Unlocked")
+        end
+
+        custom = function()
+            if UnifiedTalentGuides_Custom then
+                UnifiedTalentGuides_Custom:Show()
+            else
+                print("|cffff8080[UTG]|r Custom panel not found!")
+            end
         end
     }
 
