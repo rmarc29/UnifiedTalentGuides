@@ -193,7 +193,9 @@ UnifiedTalentGuides:RegisterEvent("PLAYER_LOGIN")
 UnifiedTalentGuides:SetScript("OnEvent", function(self, event, ...)
     UpdateTalentDisplay()
 end)
+
 -- Custom panel
+
 local customPanel = CreateFrame("Frame", "UnifiedTalentGuides_Custom", UIParent)
 customPanel:SetWidth(200)
 customPanel:SetHeight(100)
