@@ -1,5 +1,5 @@
 -- lua_safety_check.lua
--- Compatible Lua 5.0.1 – pour fichiers .lua à la racine du dépôt
+-- Compatible Lua 5.0.1 
 
 local forbidden = {
   "os%.execute",
@@ -19,12 +19,12 @@ local function scan_file(path)
     return false
   end
 
-  local content = f:read("*all")
+  local file_content = f:read("*all")
   f:close()
 
   local clean = true
   for _, pattern in ipairs(forbidden) do
-    if content:match(pattern) then
+    if file_content:match(pattern) then
       print("❌ Forbidden in " .. path .. " : " .. pattern)
       clean = false
     end
