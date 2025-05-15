@@ -19,7 +19,7 @@ jobs:
           sudo apt update && sudo apt install -y build-essential libreadline-dev
           curl -R -O https://www.lua.org/ftp/lua-5.0.1.tar.gz
           tar zxf lua-5.0.1.tar.gz
-          cd lua-5.0.1 && make linux && sudo make install
+          cd lua-5.0.1 && make && sudo make install
 
       - name: Run Lua Safety Check
         run: lua lua_safety_check.lua
