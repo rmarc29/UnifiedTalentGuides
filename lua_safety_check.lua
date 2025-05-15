@@ -24,7 +24,7 @@ local function scan_file(path)
 
   local clean = true
   for _, pattern in ipairs(forbidden) do
-    if string.match(file_content, pattern) then
+    if string.find(file_content, pattern) then
       print("❌ Forbidden in " .. path .. " : " .. pattern)
       clean = false
     end
