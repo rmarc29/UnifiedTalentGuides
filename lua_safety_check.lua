@@ -35,7 +35,7 @@ end
 local function scan_root()
   local ok = true
   for file in io.popen('find . -maxdepth 1 -name "*.lua"'):lines() do
-    if file ~= "./lua_safety_check.lua" then  -- Ignore ce fichier
+    if file ~= "./lua_safety_check.lua" then
       if not scan_file(file) then
         ok = false
       end
