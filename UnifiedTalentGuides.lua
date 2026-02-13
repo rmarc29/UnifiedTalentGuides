@@ -1,3 +1,4 @@
+local test
 local UnifiedTalentGuides = CreateFrame("Frame", "UnifiedTalentGuides", UIParent)
 UnifiedTalentGuides:SetWidth(220)
 UnifiedTalentGuides:SetHeight(160)
@@ -482,3 +483,5 @@ local function UTG_CommandHandler(msg)
 end
 
 SlashCmdList["UTG"] = UTG_CommandHandler
+
+
